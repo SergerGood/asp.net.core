@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication2.Models;
 
@@ -14,9 +11,27 @@ namespace WebApplication2.Controllers
         {
             db = context;
         }
+
         public IActionResult Index()
         {
             return View(db.Phones.ToList());
+        }
+
+
+        [HttpGet]
+        public IActionResult Buy(int id)
+        {
+            ViewBag.PhoneId = id;
+            return View();
+        }
+
+        [HttpPost]
+        public string Buy(Order order)
+        {
+            db.Orders.Add(order);
+            db.SaveChanges();
+
+            return $"Спасибо {order.User} за покуаку!";
         }
     }
 }
