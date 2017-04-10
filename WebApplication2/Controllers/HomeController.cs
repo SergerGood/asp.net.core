@@ -3,16 +3,20 @@ using System.Linq;
 using ASP.NET.Sample.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using ControllersApp.Util;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace ASP.NET.Sample.Web.Controllers
 {
     public class HomeController : Controller
     {
         private readonly MobileContext db;
+        private readonly IHostingEnvironment appEnvironment;
 
-        public HomeController(MobileContext context)
+        public HomeController(MobileContext context, IHostingEnvironment appEnvironment)
         {
             db = context;
+            this.appEnvironment = appEnvironment;
         }
 
         [HttpGet]
@@ -43,6 +47,29 @@ namespace ASP.NET.Sample.Web.Controllers
             return View(db.Phones.ToList());
         }
 
+        public IActionResult Index2()
+        {
+            return Redirect("~/Home/About");
+        }
+
+        public IActionResult Index3()
+        {
+            return RedirectToAction("Square", "Home", new { altitude = 10, height = 3 });
+        }
+
+        public IActionResult Index4()
+        {
+            return RedirectToRoute("default", new { controller = "Home", action = "Square", height = 2, altitude = 20 });
+        }
+
+        public IActionResult Index5(int age)
+        {
+            if (age < 18)
+                return Unauthorized();
+
+            return View();
+        }
+
         public string Square(Geometry geometry)
         {
             return $"Площадь треугольника с основанием {geometry.Altitude} и высотой {geometry.Height} равна {geometry.GetSquare()}";
@@ -64,6 +91,24 @@ namespace ASP.NET.Sample.Web.Controllers
         {
             string name = "Tom";
             return Json(name);
+        }
+
+        public IActionResult GetFile()
+        {
+            string file_path = Path.Combine(appEnvironment.ContentRootPath, "Files/hello.txt");
+            string file_type = "text/plain";
+
+            return PhysicalFile(file_path, file_type);
+        }
+
+        public FileResult GetStream()
+        {
+            string file_path = Path.Combine(appEnvironment.ContentRootPath, "Files/hello.txt");
+            string file_type = "text/plain";
+
+            FileStream fs = new FileStream(file_path, FileMode.Open);
+
+            return File(fs, file_type);
         }
 
         //public string Square()
