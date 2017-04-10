@@ -1,24 +1,18 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using ASP.NET.Sample.Web.Models;
 using Microsoft.AspNetCore.Mvc;
-using WebApplication2.Models;
-using System;
 
-namespace WebApplication2.Controllers
+namespace ASP.NET.Sample.Web.Controllers
 {
     public class HomeController : Controller
     {
-        MobileContext db;
+        private readonly MobileContext db;
+
         public HomeController(MobileContext context)
         {
             db = context;
         }
-
-        [ActionName("Index")]
-        public IActionResult Index()
-        {
-            return View(db.Phones.ToList());
-        }
-
 
         [HttpGet]
         public IActionResult Buy(int id)
@@ -40,6 +34,12 @@ namespace WebApplication2.Controllers
         public string Hello()
         {
             return "Hello ASP.NET";
+        }
+
+        [ActionName("Index")]
+        public IActionResult Index()
+        {
+            return View(db.Phones.ToList());
         }
 
         public string Square(Geometry geometry)
@@ -83,7 +83,6 @@ namespace WebApplication2.Controllers
         {
             return $"Сумма площадей равна {geoms.Sum(g => g.GetSquare())}";
         }
-
     }
 
     public class Geometry

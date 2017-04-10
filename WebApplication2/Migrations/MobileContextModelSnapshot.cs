@@ -1,14 +1,13 @@
 ﻿using System;
+using ASP.NET.Sample.Web.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
-using WebApplication2.Models;
 
-namespace WebApplication2.Migrations
+namespace ASP.NET.Sample.Web.Migrations
 {
     [DbContext(typeof(MobileContext))]
-    partial class MobileContextModelSnapshot : ModelSnapshot
+    internal partial class MobileContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -16,7 +15,8 @@ namespace WebApplication2.Migrations
                 .HasAnnotation("ProductVersion", "1.1.1")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("WebApplication2.Models.Order", b =>
+            modelBuilder.Entity("WebApplication2.Models.Order",
+                b =>
                 {
                     b.Property<int>("OrderId")
                         .ValueGeneratedOnAdd();
@@ -36,7 +36,8 @@ namespace WebApplication2.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("WebApplication2.Models.Phone", b =>
+            modelBuilder.Entity("WebApplication2.Models.Phone",
+                b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -52,7 +53,8 @@ namespace WebApplication2.Migrations
                     b.ToTable("Phones");
                 });
 
-            modelBuilder.Entity("WebApplication2.Models.Order", b =>
+            modelBuilder.Entity("WebApplication2.Models.Order",
+                b =>
                 {
                     b.HasOne("WebApplication2.Models.Phone", "Phone")
                         .WithMany()
