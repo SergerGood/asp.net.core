@@ -1,6 +1,5 @@
 ﻿@using System
-@using NET.Sample.Web.Models
-@model IEnumerable<Phone>
+@model IEnumerable<ASP.NET.Sample.Web.Models.Phone>
 @{
     ViewData["Title"] = "Каталог товаров";
 }
@@ -12,7 +11,7 @@
         <td>Цена</td>
         <td></td>
     </tr>
-    @foreach (Phone phone in Model)
+    @foreach (ASP.NET.Sample.Web.Models.Phone phone in Model)
     {
         <tr>
             <td>@phone.Name</td>

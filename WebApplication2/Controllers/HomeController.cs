@@ -2,6 +2,7 @@
 using System.Linq;
 using ASP.NET.Sample.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using ControllersApp.Util;
 
 namespace ASP.NET.Sample.Web.Controllers
 {
@@ -48,10 +49,21 @@ namespace ASP.NET.Sample.Web.Controllers
         }
 
         [HttpPost]
-        public string Square(int altitude, int height)
+        public IActionResult Square(int altitude, int height)
         {
             double square = altitude * height / 2;
-            return $"Площадь треугольника с основанием {altitude} и высотой {height} равна {square}";
+            return Content($"Площадь треугольника с основанием {altitude} и высотой {height} равна {square}");
+        }
+
+        public HtmlResult GetHtml()
+        {
+            return new HtmlResult("<h2>Привет ASP.NET Core</h2>");
+        }
+
+        public JsonResult GetName()
+        {
+            string name = "Tom";
+            return Json(name);
         }
 
         //public string Square()

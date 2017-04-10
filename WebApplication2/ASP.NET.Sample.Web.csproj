@@ -8,6 +8,7 @@
     <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wp8+wpa81;</PackageTargetFallback>
     <ApplicationInsightsResourceId>/subscriptions/ee84993f-057d-42d0-b88d-c96fb3f79088/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/WebApplication2</ApplicationInsightsResourceId>
     <ApplicationInsightsAnnotationResourceId>/subscriptions/ee84993f-057d-42d0-b88d-c96fb3f79088/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/WebApplication2</ApplicationInsightsAnnotationResourceId>
+    <UserSecretsId>c13964f9-bfa8-435e-aa21-028bf9dac77a</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
