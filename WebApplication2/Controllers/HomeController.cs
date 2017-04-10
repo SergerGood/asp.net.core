@@ -8,7 +8,7 @@ using System.IO;
 
 namespace ASP.NET.Sample.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : HelloBaseController
     {
         private readonly MobileContext db;
         private readonly IHostingEnvironment appEnvironment;
