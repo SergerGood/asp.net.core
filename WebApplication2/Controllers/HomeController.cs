@@ -1,10 +1,11 @@
-﻿using System;
-using System.Linq;
-using ASP.NET.Sample.Web.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using ASP.NET.Sample.Web.Models;
+using ASP.NET.Sample.Web.Util;
 using ControllersApp.Util;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System.IO;
+using System.Linq;
 
 namespace ASP.NET.Sample.Web.Controllers
 {
@@ -13,10 +14,15 @@ namespace ASP.NET.Sample.Web.Controllers
         private readonly MobileContext db;
         private readonly IHostingEnvironment appEnvironment;
 
-        public HomeController(MobileContext context, IHostingEnvironment appEnvironment)
+        private readonly Restrictions restrictions;
+
+        public HomeController(MobileContext context, 
+            IHostingEnvironment appEnvironment,
+            IOptions<Restrictions> restrictions)
         {
             db = context;
             this.appEnvironment = appEnvironment;
+            this.restrictions = restrictions.Value;
         }
 
         [HttpGet]
@@ -39,6 +45,17 @@ namespace ASP.NET.Sample.Web.Controllers
         public string Hello()
         {
             return "Hello ASP.NET";
+        }
+
+        public IActionResult Hello2([FromServices] IHostingEnvironment env)
+        {
+            return Content(env.ContentRootPath);
+        }
+
+        public IActionResult Hello3()
+        {
+            string ageInfo = $"Age:{restrictions.Age}";
+            return Content(ageInfo);
         }
 
         [ActionName("Index")]

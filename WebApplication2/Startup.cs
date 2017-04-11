@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using ASP.NET.Sample.Web.Util;
 
 namespace ASP.NET.Sample.Web
 {
@@ -56,6 +57,9 @@ namespace ASP.NET.Sample.Web
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<MobileContext>(options => options.UseSqlServer(connection));
+
+            services.AddOptions();
+            services.Configure<Restrictions>(Configuration);
 
             // Add framework services.
             services.AddMvc();
