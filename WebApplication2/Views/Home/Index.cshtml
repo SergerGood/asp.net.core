@@ -3,6 +3,16 @@
 @{
     ViewData["Title"] = "Каталог товаров";
 }
+@functions
+{
+    public int GetFactorial(int n)
+    {
+        int result = 1;
+        for (int i = 1; i <= n; i++)
+            result *= i;
+        return result;
+    }
+}
 <h3>Смартфоны</h3>
 <table class="table-condensed">
     <tr>
@@ -26,6 +36,8 @@
 
 </table>
 
+<div>Факториал числа 6 равен: @GetFactorial(6)</div>
+
 <form method="post" action="~/Home/Square">
     <label>Высота:</label><br/>
     <input type="number" name="height"/><br/>
@@ -33,3 +45,17 @@
     <input type="number" name="altitude"/><br/>
     <input type="submit" value="Отправить"/>
 </form>
+
+@try
+{
+    @: Добро пожаловать ошибка
+    throw new InvalidOperationException("Что-то пошло не так");
+}
+catch (Exception ex)
+{
+    <p>Возникло исключение: @ex.Message</p>
+}
+finally
+{
+    <p>Блок finally</p>
+}
