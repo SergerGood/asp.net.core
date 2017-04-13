@@ -41,6 +41,7 @@ namespace ASP.NET.Sample.Web
             }
 
             app.UseStaticFiles();
+            app.UseSession();
 
             app.UseMvc(routes =>
             {
@@ -60,6 +61,13 @@ namespace ASP.NET.Sample.Web
 
             services.AddOptions();
             services.Configure<Restrictions>(Configuration);
+
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.CookieName = ".MyApp.Session";
+                options.IdleTimeout = TimeSpan.FromSeconds(3600);
+            });
 
             // Add framework services.
             services.AddMvc();

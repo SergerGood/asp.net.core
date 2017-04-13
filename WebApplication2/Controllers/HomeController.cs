@@ -61,6 +61,7 @@ namespace ASP.NET.Sample.Web.Controllers
         [ActionName("Index")]
         public IActionResult Index()
         {
+            TempData["Message"] = "Hello Temp data";
             return View(db.Phones.ToList());
         }
 
