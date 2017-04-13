@@ -58,6 +58,11 @@ namespace ASP.NET.Sample.Web.Controllers
             return Content(ageInfo);
         }
 
+        public ActionResult GetMessage()
+        {
+            return PartialView("_GetMessage");
+        }
+
         [ActionName("Index")]
         public IActionResult Index()
         {

@@ -1,0 +1,10 @@
+﻿@model IEnumerable<string>
+
+<h3>Частичное представление</h3>
+<h3>Список моделей</h3>
+<ul>
+    @foreach (string s in Model)
+    {
+        <li>@s</li>
+    }
+</ul>

@@ -28,7 +28,14 @@
     @RenderBody()
     <hr/>
     <footer>
-        <p>© 2017 - MobileStore</p>
+        @if (IsSectionDefined("Footer"))
+        {
+            @RenderSection("Footer")
+        }
+        else
+        {
+            <span>Содержание элемента footer по умолчанию.</span>
+        }
     </footer>
 </div>
 </body>
