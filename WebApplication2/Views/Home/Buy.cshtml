@@ -1,8 +1,13 @@
 ﻿@using System
+
+@inject IMessageSender MessageSender
+
 @{
     ViewData["Title"] = "Оформление заказа";
 }
 <h2>Форма оформления покупки</h2>
+
+@MessageSender.SendMessage()
 
 <form method="post" class="form-horizontal" role="form">
     <input type="hidden" value="@ViewBag.PhoneId" name="PhoneId"/>

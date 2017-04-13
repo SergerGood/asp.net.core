@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using ASP.NET.Sample.Web.Util;
+using ASP.NET.Sample.Web.Services;
 
 namespace ASP.NET.Sample.Web
 {
@@ -68,6 +69,8 @@ namespace ASP.NET.Sample.Web
                 options.CookieName = ".MyApp.Session";
                 options.IdleTimeout = TimeSpan.FromSeconds(3600);
             });
+
+            services.AddTransient<IMessageSender, EmailMessageSender>();
 
             // Add framework services.
             services.AddMvc();
