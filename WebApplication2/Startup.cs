@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using ASP.NET.Sample.Web.Util;
 using ASP.NET.Sample.Web.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ASP.NET.Sample.Web
 {
@@ -50,6 +51,7 @@ namespace ASP.NET.Sample.Web
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            //app.UseMvcWithDefaultRoute();
 
             SampleData.Initialize(app.ApplicationServices);
         }
@@ -74,6 +76,11 @@ namespace ASP.NET.Sample.Web
 
             // Add framework services.
             services.AddMvc();
+
+            //services.Configure<MvcViewOptions>(options => {
+            //    options.ViewEngines.Clear();
+            //    options.ViewEngines.Insert(0, new CustomViewEngine());
+            //});
         }
     }
 }
