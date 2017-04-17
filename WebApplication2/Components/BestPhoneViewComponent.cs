@@ -2,29 +2,28 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace ASP.NET.Sample.Web.Components
 {
     public class BestPhone : ViewComponent
     {
-        List<Phone> phones;
+        MobileContext context;
 
-        public BestPhone()
+        public BestPhone(MobileContext context)
         {
-            phones = new List<Phone>
-            {
-                new Phone {Name="iPhone 7", Price=56000 },
-                new Phone {Name="Idol S4", Price=26000 },
-                new Phone {Name="Elite x3", Price=55000 },
-                new Phone {Name="Honor 8", Price=23000 }
-            };
+            this.context = context;
         }
 
-        public string Invoke()
+        public async Task<IViewComponentResult> InvokeAsync(int maxPrice)
         {
-            var item = phones.OrderByDescending(x => x.Price).Take(1).FirstOrDefault();
+            var items = await context.Phones
+                .Where(x => x.Price <= maxPrice)
+                .OrderByDescending(x => x.Price)
+                .ToListAsync();
 
-            return $"Самый дорогой телефон: {item.Name} Цена: {item.Price}";
+            return View(items);
         }
     }
 }
