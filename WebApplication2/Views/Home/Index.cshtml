@@ -1,4 +1,5 @@
 ﻿@using System
+
 @model IEnumerable<ASP.NET.Sample.Web.Models.Phone>
 @{
     ViewData["Title"] = "Каталог товаров";
@@ -56,6 +57,10 @@
     <br/>
     @Html.DropDownList("daytime", Html.GetEnumSelectList(typeof(TimeOfDay)))
     <br/>
+
+    @Html.LabelFor(m => m.First().Name, "Наименование первого телефона")
+    @Html.TextBoxFor(m => m.First().Name)
+
     <input type="submit" value="Отправить"/>
 }
 
