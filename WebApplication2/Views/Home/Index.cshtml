@@ -3,6 +3,12 @@
 @{
     ViewData["Title"] = "Каталог товаров";
 }
+
+@{
+    string[] cities = new string[] { "Лондон", "Париж", "Берлин" };
+    string[] countries = new string[] { "Великобритания", "Франция", "Германия" };
+}
+
 @functions
 {
     public int GetFactorial(int n)
@@ -65,6 +71,12 @@ finally
 @{await Html.RenderPartialAsync("_GetMessage", new List<string> { "Lumia 950", "iPhone 6S", "Samsung Galaxy s 6", "LG G 4" });}
 
 @await Component.InvokeAsync("BestPhone", new { maxPrice = 55000 })
+
+<h3>Города</h3>
+@Html.CreateList(cities)
+
+<h3>Страны</h3>
+@ListHelper.CreateList(Html, countries)
 
 @section Footer {
     Все права защищены. Site Corp. 2017.
