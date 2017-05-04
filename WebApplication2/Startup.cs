@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using ASP.NET.Sample.Web.Util;
 using ASP.NET.Sample.Web.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ASP.NET.Sample.Web
@@ -31,6 +32,9 @@ namespace ASP.NET.Sample.Web
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            app.UseElmPage();
+            app.UseElmCapture();
 
             if (env.IsDevelopment())
             {
@@ -77,10 +81,18 @@ namespace ASP.NET.Sample.Web
             // Add framework services.
             services.AddMvc();
 
+            services.AddElm(options =>
+            {
+                options.Path = new PathString("/elm");
+                options.Filter = (name, level) => level >= LogLevel.Error;
+            });
+
             //services.Configure<MvcViewOptions>(options => {
             //    options.ViewEngines.Clear();
             //    options.ViewEngines.Insert(0, new CustomViewEngine());
             //});
+
+
         }
     }
 }
