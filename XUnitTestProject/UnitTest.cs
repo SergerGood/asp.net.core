@@ -1,42 +1,87 @@
-using System;
 using System.Threading.Tasks;
 using Alba;
-using ASP.NET.Sample.Web;
-using ASP.NET.Sample.Web.Controllers;
 using Baseline;
 using Xunit;
+using ASP.NET.Core.Web.Api;
+using ASP.NET.Core.Web.Api.Controllers;
+using ASP.NET.Core.Web.Api.Models;
 
 namespace XUnitTestProject
 {
     public class UnitTest
     {
         [Fact]
-        public async Task should_say_hello_world()
+        public async Task ShouldGetByController()
         {
             using (var system = SystemUnderTest.ForStartup<Startup>())
             {
-
-                //return system.Scenario(scenario =>
-                //{
-                //    scenario.Get.Url("/GetHtml");
-                //    scenario.ContentShouldBe("<h2>Привет ASP.NET Core</h2>");
-                //    scenario.StatusCodeShouldBeOk();
-                //});
-
-                var response = await system.Scenario(_ =>
+                var response = await system.Scenario(scenario =>
                 {
-                    _.Get.Url("/Home/Buy/1");
+                    scenario.Get.Action<ValuesController>(x => x.Get());
+
+                    scenario
+                        .StatusCodeShouldBeOk()
+                        .ContentShouldBe("Hello, World!");
+
                 });
+            }
+        }
 
-                var asd = response.ResponseBody.ReadAsText();//.ShouldBe("Hello, World!");
+        [Fact]
+        public async Task ShouldGetByUrl()
+        {
+            using (var system = SystemUnderTest.ForStartup<Startup>())
+            {
+                var response = await system.Scenario(scenario =>
+                {
+                    scenario.Get.Url("/api/values");
 
-                // or you can go straight at the HttpContext
-                // The ReadAllText() extension method is from Baseline
+                    scenario
+                        .StatusCodeShouldBeOk()
+                        .ContentShouldBe("Hello, World!");
 
+                });
+            }
+        }
 
-                var body = response.Context.Response.Body;
-                body.Position = 0; // need to rewind it because we read it above
-                var ss = body.ReadAllText();//.ShouldBe("Hello, World!");
+        [Fact]
+        public async Task ShouldGetByUrlWithParams()
+        {
+            using (var system = SystemUnderTest.ForStartup<Startup>())
+            {
+                var response = await system.Scenario(scenario =>
+                {
+                    scenario.Get.Url("/api/values")
+                        .Accepts("text/plain")
+                        .ContentType("text/json")
+                        .Etag("12345");
+
+                    scenario
+                        .StatusCodeShouldBeOk()
+                        .ContentShouldBe("Hello, World!");
+
+                    scenario.Header("content-length").SingleValueShouldEqual("150");
+                    scenario.Header("connection").ShouldNotBeWritten();
+                    scenario.Header("set-cookie").ShouldHaveOneNonNullValue();
+                    scenario.ContentTypeShouldBe("text/json");
+                });
+            }
+        }
+
+        [Fact]
+        public async Task ShouldGetJson()
+        {
+            using (var system = SystemUnderTest.ForStartup<Startup>())
+            {
+                var responce = await system.Scenario(scenario =>
+                {
+                    scenario.Get.Url("/api/values/person");
+                }
+                );
+
+                var person = responce.ResponseBody.ReadAsJson<Person>();
+
+                Assert.Equal("Name", person.Name);
             }
         }
     }
