@@ -82,7 +82,7 @@ namespace ASP.NET.Sample.Web
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
             {
-                options.CookieName = ".MyApp.Session";
+                options.Cookie.Name = ".MyApp.Session";
                 options.IdleTimeout = TimeSpan.FromSeconds(3600);
             });
 
